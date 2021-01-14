@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:http/http.dart' as http;
 import 'package:weather/weather.dart';
 
 void main() {
@@ -20,6 +19,7 @@ class MyApp extends StatelessWidget {
     final List<String> cities = <String>['Kraków', 'Dębica', 'Jasło'];
     final List<int> colorCodes = <int>[600, 500, 100];
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: title,
       home: Scaffold(
         appBar: AppBar(
@@ -58,6 +58,7 @@ class CityWeather extends StatelessWidget {
       builder: (context, AsyncSnapshot<Weather> snapshot) {
         if (snapshot.hasData) {
           return MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: cities[index],
               home: Scaffold(
                   appBar: AppBar(
