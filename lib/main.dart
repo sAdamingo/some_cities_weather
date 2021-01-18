@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
     final List<String> pictures = <String>[
       'images/krakow.jpg',
       'images/debica.jpg',
-      'images/jaslo.jpg'
+      'images/jaslo.jpg',
+      'images/olsztyn.jpg',
     ];
-    final List<String> cities = <String>['Kraków', 'Dębica', 'Jasło'];
-    final List<int> colorCodes = <int>[600, 500, 100];
+    final List<String> cities = <String>['Kraków', 'Dębica', 'Jasło', 'Olsztyn'];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: title,
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           title: Text(title),
         ),
         body: CitiesList(
-            pictures: pictures, colorCodes: colorCodes, cities: cities),
+            pictures: pictures, cities: cities),
       ),
     );
   }
@@ -48,7 +48,8 @@ class CityWeather extends StatelessWidget {
     List<List<double>> geolocation = [
       [50.06, 19.94],
       [50.05146, 21.41141],
-      [49.74506, 21.47252]
+      [49.74506, 21.47252],
+      [53.76474712627604, 20.490128467483242],
     ];
     WeatherFactory wf = new WeatherFactory("4d6bfd3c0aaf505548b49b45d6fa1d61");
     String title = 'Weather in ' + cities[index];
@@ -94,7 +95,7 @@ class CityWeather extends StatelessWidget {
                     ],
                   ))));
         } else {
-          return CircularProgressIndicator();
+          return LinearProgressIndicator();
         }
       },
     );
@@ -105,12 +106,10 @@ class CitiesList extends StatelessWidget {
   const CitiesList({
     Key key,
     @required this.pictures,
-    @required this.colorCodes,
     @required this.cities,
   }) : super(key: key);
 
   final List<String> pictures;
-  final List<int> colorCodes;
   final List<String> cities;
 
   @override
@@ -133,7 +132,6 @@ class CitiesList extends StatelessWidget {
               alignment: Alignment.center,
               children: <Widget>[
                 Container(
-                  color: Colors.amber[colorCodes[index]],
                   child: Image.asset(
                     pictures[index],
                     fit: BoxFit.cover,
