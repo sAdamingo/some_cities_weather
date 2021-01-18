@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:weather/weather.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(
+    new MaterialApp(debugShowCheckedModeBanner: false, home: new MyApp()));
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final BuildContext ctx = context;
     final title = 'Most wanted weather conditions';
     final List<String> pictures = <String>[
       'images/krakow.jpg',
@@ -17,18 +17,42 @@ class MyApp extends StatelessWidget {
       'images/jaslo.jpg',
       'images/olsztyn.jpg',
     ];
-    final List<String> cities = <String>['Kraków', 'Dębica', 'Jasło', 'Olsztyn'];
+    final List<String> cities = <String>[
+      'Kraków',
+      'Dębica',
+      'Jasło',
+      'Olsztyn'
+    ];
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: title,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: CitiesList(
-            pictures: pictures, cities: cities),
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        title: title,
+        home: Scaffold(
+          appBar: AppBar(title: Text(title), actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.info),
+              tooltip: 'About',
+              onPressed: () => {
+                showDialog(
+                    context: ctx,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: new Text("About app"),
+                        content: new Text("Author: Adam Stelmach \nVersion: 1.0\nRelease date: 18.01.2021"),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('Close'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          )
+                        ],
+                      );
+                    })
+              },
+            )
+          ]),
+          body: CitiesList(pictures: pictures, cities: cities),
+        ));
   }
 }
 
@@ -79,8 +103,7 @@ class CityWeather extends StatelessWidget {
                           snapshot.data.weatherIcon +
                           '@2x.png'),
                       Text('Temperature: ' +
-                          snapshot.data.temperature.celsius
-                              .toStringAsPrecision(1) +
+                          snapshot.data.temperature.celsius.toStringAsFixed(0) +
                           '\nCondition: ' +
                           snapshot.data.weatherDescription +
                           "\nRain last hour: " +
@@ -88,7 +111,7 @@ class CityWeather extends StatelessWidget {
                           "\nSnow last hour: " +
                           snapshot.data.snowLastHour.toString()),
                       ElevatedButton(
-                          child: Text('RETURN TO MAIN PAGE'),
+                          child: Text('RETURN TO CITY SELECTION'),
                           onPressed: () {
                             Navigator.pop(context);
                           })
