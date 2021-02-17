@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
                     builder: (context) {
                       return AlertDialog(
                         title: new Text("About app"),
-                        content: new Text("Author: Adam Stelmach \nVersion: 1.0\nRelease date: 18.01.2021"),
+                        content: new Text(
+                            "Author: Adam Stelmach \nVersion: 1.0\nRelease date: 18.01.2021"),
                         actions: <Widget>[
                           FlatButton(
                             child: Text('Close'),
@@ -104,17 +105,21 @@ class CityWeather extends StatelessWidget {
                           '@2x.png'),
                       Text('Temperature: ' +
                           snapshot.data.temperature.celsius.toStringAsFixed(0) +
-                          '\nCondition: ' +
+                          '°C\nCondition: ' +
                           snapshot.data.weatherDescription +
                           "\nRain last hour: " +
                           snapshot.data.rainLastHour.toString() +
                           "\nSnow last hour: " +
                           snapshot.data.snowLastHour.toString()),
-                      ElevatedButton(
-                          child: Text('RETURN TO CITY SELECTION'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          })
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18),
+                            side: BorderSide(color: Colors.lightBlue)),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('RETURN TO CITY SELECTION'),
+                      )
                     ],
                   ))));
         } else {
